@@ -1,6 +1,6 @@
 # ResumeAI — Professional Resume Analyzer
 
-AI-powered resume analysis built with Next.js, Groq LLM, and MongoDB.
+AI-powered resume analysis built with Next.js and MongoDB.
 
 ## Features
 
@@ -57,7 +57,7 @@ Open [http://localhost:3001](http://localhost:3001)
 ## Tech Stack
 
 - **Framework:** Next.js 15 (App Router)
-- **AI:** Groq SDK (Llama 3.3 70B)
+- **AI:** AI-Powered Analysis (Llama 3.3 70B)
 - **Database:** MongoDB + Mongoose
 - **Parsing:** pdf-parse, mammoth
 - **UI:** Tailwind CSS, Recharts, Lucide Icons

@@ -19,9 +19,9 @@ const features = [
   },
   {
     icon: Brain,
-    title: "AI-Powered Deep Analysis",
+  title: "AI-Powered Deep Analysis",
     description:
-      "Groq LLM analyzes content quality, impact statements, keyword density, and section structure with expert-level precision.",
+      "Advanced AI analyzes content quality, impact statements, keyword density, and section structure with expert-level precision.",
   },
   {
     icon: Target,
@@ -68,7 +68,7 @@ export default function HomePage() {
         <div className="relative mx-auto max-w-4xl text-center">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-sm text-accent">
             <Sparkles className="h-4 w-4" />
-            Powered by Groq Llama 3.3 70B
+            Powered by AI
           </div>
 
           <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">

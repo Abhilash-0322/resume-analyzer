@@ -302,7 +302,7 @@ export function AnalysisReportDocument({
             Resume<Text style={styles.brandAccent}>AI</Text>
           </Text>
           <Text style={styles.tagline}>
-            Professional Resume Analysis Report · Powered by Groq LLM
+            Professional Resume Analysis Report · AI-Powered
           </Text>
         </View>
 

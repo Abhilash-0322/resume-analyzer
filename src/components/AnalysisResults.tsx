@@ -20,6 +20,7 @@ import { isStepAtOrPast, type RevealStepId } from "@/lib/staged-reveal";
 import { ScoreRing } from "./ScoreRing";
 import { ScoreBar } from "./ScoreBar";
 import { RoleBenchmark } from "./RoleBenchmark";
+import { AtsSimulationReport } from "./AtsSimulationReport";
 import { RevealSection } from "./RevealSection";
 import { cn } from "@/lib/utils";
 
@@ -56,6 +57,13 @@ export function AnalysisResults({ result, fileName, isPartial, revealStep }: Ana
 
   return (
     <div className="space-y-8">
+      {/* ATS Simulation */}
+      {result.atsSimulation && (
+        <RevealSection visible={show(revealStep, "ats-simulation")}>
+          <AtsSimulationReport simulation={result.atsSimulation} />
+        </RevealSection>
+      )}
+
       {/* Header */}
       <RevealSection visible={show(revealStep, "header")}>
         <div className="card-glow rounded-2xl border border-border bg-card p-6 sm:p-8">

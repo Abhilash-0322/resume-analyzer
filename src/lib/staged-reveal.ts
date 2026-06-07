@@ -2,6 +2,7 @@ import type { AnalysisResult } from "@/types/analysis";
 
 export type RevealStepId =
   | "parsing"
+  | "ats-simulation"
   | "analyzing"
   | "header"
   | "score-overall"
@@ -38,11 +39,19 @@ export const REVEAL_STEPS: RevealStepConfig[] = [
     hasData: () => true,
   },
   {
+    id: "ats-simulation",
+    label: "ATS structure scan",
+    message: "Simulating ATS parsing — tables, columns, fonts, sections...",
+    minMs: 1300,
+    progress: 12,
+    hasData: (r) => !!r?.atsSimulation,
+  },
+  {
     id: "analyzing",
     label: "AI analyzing",
     message: "Groq AI is reviewing your resume in depth...",
     minMs: 1600,
-    progress: 14,
+    progress: 18,
     hasData: () => true,
   },
   {

@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { parseResumeFile } from "@/lib/parse-resume";
+import {
+  enrichResultWithAts,
+  formatAtsContextForAI,
+  runAtsSimulation,
+} from "@/lib/ats-simulation";
 import { analyzeResumeWithAI } from "@/lib/groq";
 import { attachRoleBenchmark } from "@/lib/role-benchmark";
 import { isValidRoleId } from "@/lib/role-templates";
@@ -41,20 +46,31 @@ export async function POST(request: NextRequest) {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-    const resumeText = await parseResumeFile(buffer, file.name, file.type);
-    let result = await analyzeResumeWithAI(
-      resumeText,
-      jobDescription?.trim() || undefined,
-      targetRole
+    const parsed = await parseResumeFile(buffer, file.name, file.type);
+    const atsSimulation = await runAtsSimulation(
+      buffer,
+      file.name,
+      file.type,
+      parsed.rawText,
+      parsed.pageCount
     );
-    result = attachRoleBenchmark(targetRole, result, resumeText);
+    const atsContext = formatAtsContextForAI(atsSimulation);
+
+    let result = await analyzeResumeWithAI(
+      parsed.text,
+      jobDescription?.trim() || undefined,
+      targetRole,
+      atsContext
+    );
+    result = enrichResultWithAts(result, atsSimulation);
+    result = attachRoleBenchmark(targetRole, result, parsed.text);
 
     await connectDB();
     const analysis = await Analysis.create({
       userId: user.id,
       fileName: file.name,
       fileType: file.type || "unknown",
-      resumeText,
+      resumeText: parsed.text,
       jobDescription: jobDescription?.trim() || undefined,
       targetRole: targetRole as RoleId | undefined,
       result,

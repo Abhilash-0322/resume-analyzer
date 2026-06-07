@@ -14,7 +14,8 @@ const SYSTEM_PROMPT =
 function buildAnalysisPrompt(
   resumeText: string,
   jobDescription?: string,
-  targetRole?: RoleId
+  targetRole?: RoleId,
+  atsContext?: string
 ): string {
   const jobSection = jobDescription
     ? `\n\nJOB DESCRIPTION TO MATCH AGAINST:\n${jobDescription}\n\nInclude a "jobMatch" object with matchScore (0-100), matchedKeywords, missingKeywords, and tailoredSuggestions.`
@@ -76,6 +77,7 @@ Scoring guidelines:
 - Impact statements: quantify achievements, use action verbs, show results.
 - Provide specific, actionable feedback — not generic advice.
 
+${atsContext ? `\n\n${atsContext}\n` : ""}
 RESUME TEXT:
 ${resumeText}
 ${jobSection}${roleSection}`;
@@ -107,13 +109,17 @@ function normalizeResult(parsed: AnalysisResult): AnalysisResult {
 export async function analyzeResumeWithAI(
   resumeText: string,
   jobDescription?: string,
-  targetRole?: RoleId
+  targetRole?: RoleId,
+  atsContext?: string
 ): Promise<AnalysisResult> {
   const completion = await groq.chat.completions.create({
     model: MODEL,
     messages: [
       { role: "system", content: SYSTEM_PROMPT },
-      { role: "user", content: buildAnalysisPrompt(resumeText, jobDescription, targetRole) },
+      {
+        role: "user",
+        content: buildAnalysisPrompt(resumeText, jobDescription, targetRole, atsContext),
+      },
     ],
     temperature: 0.3,
     max_tokens: 4096,
@@ -132,13 +138,17 @@ export async function streamResumeAnalysis(
   resumeText: string,
   jobDescription?: string,
   onChunk?: (text: string) => void,
-  targetRole?: RoleId
+  targetRole?: RoleId,
+  atsContext?: string
 ): Promise<AnalysisResult> {
   const stream = await groq.chat.completions.create({
     model: MODEL,
     messages: [
       { role: "system", content: SYSTEM_PROMPT },
-      { role: "user", content: buildAnalysisPrompt(resumeText, jobDescription, targetRole) },
+      {
+        role: "user",
+        content: buildAnalysisPrompt(resumeText, jobDescription, targetRole, atsContext),
+      },
     ],
     temperature: 0.3,
     max_tokens: 4096,
@@ -180,6 +190,7 @@ export function parsePartialAnalysis(text: string): Partial<AnalysisResult> {
       "atsTips",
       "jobMatch",
       "roleBenchmark",
+      "atsSimulation",
     ];
 
     for (const field of fields) {

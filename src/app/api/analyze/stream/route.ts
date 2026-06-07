@@ -1,6 +1,11 @@
 import { NextRequest } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { parseResumeFile } from "@/lib/parse-resume";
+import {
+  enrichResultWithAts,
+  formatAtsContextForAI,
+  runAtsSimulation,
+} from "@/lib/ats-simulation";
 import { parsePartialAnalysis, streamResumeAnalysis } from "@/lib/groq";
 import { attachRoleBenchmark } from "@/lib/role-benchmark";
 import { isValidRoleId } from "@/lib/role-templates";
@@ -26,7 +31,7 @@ export async function POST(request: NextRequest) {
       try {
         const user = await requireAuth(request);
 
-        send({ phase: "parsing", message: "Extracting text from resume...", progress: 10 });
+        send({ phase: "parsing", message: "Extracting text from resume...", progress: 8 });
 
         const formData = await request.formData();
         const file = formData.get("file") as File | null;
@@ -59,9 +64,33 @@ export async function POST(request: NextRequest) {
         }
 
         const buffer = Buffer.from(await file.arrayBuffer());
-        const resumeText = await parseResumeFile(buffer, file.name, file.type);
+        const parsed = await parseResumeFile(buffer, file.name, file.type);
 
-        send({ phase: "analyzing", message: "AI is analyzing your resume...", progress: 25 });
+        send({
+          phase: "parsing",
+          message: "Running ATS structure simulation...",
+          progress: 12,
+        });
+
+        const atsSimulation = await runAtsSimulation(
+          buffer,
+          file.name,
+          file.type,
+          parsed.rawText,
+          parsed.pageCount
+        );
+
+        send({
+          phase: "parsing",
+          data: { atsSimulation },
+          message: "ATS structure scan complete",
+          progress: 18,
+        });
+
+        const resumeText = parsed.text;
+        const atsContext = formatAtsContextForAI(atsSimulation);
+
+        send({ phase: "analyzing", message: "AI is analyzing your resume...", progress: 22 });
 
         let accumulated = "";
         const emitted = new Set<string>();
@@ -127,9 +156,11 @@ export async function POST(request: NextRequest) {
               send({ phase: "jobMatch", data: { jobMatch: partial.jobMatch }, progress: 95 });
             }
           },
-          targetRole
+          targetRole,
+          atsContext
         );
 
+        result = enrichResultWithAts(result, atsSimulation);
         result = attachRoleBenchmark(targetRole, result, resumeText);
 
         if (targetRole && result.roleBenchmark) {

@@ -81,6 +81,39 @@ export interface BulletRewrite {
   section: string;
 }
 
+export type AtsCheckStatus = "pass" | "warn" | "fail";
+
+export interface AtsCheck {
+  id: string;
+  label: string;
+  status: AtsCheckStatus;
+  message: string;
+  details?: string;
+}
+
+export interface AtsSimulationMetadata {
+  pageCount?: number;
+  fontCount?: number;
+  fonts?: string[];
+  hasImages?: boolean;
+  textCharCount?: number;
+  textDensity?: number;
+  hasTables?: boolean;
+  hasColumns?: boolean;
+  hasHeaderFooter?: boolean;
+  fileType: string;
+}
+
+export interface AtsSimulationResult {
+  score: number;
+  parseability: "excellent" | "good" | "fair" | "poor";
+  checks: AtsCheck[];
+  foundSections: string[];
+  missingSections: string[];
+  recommendations: string[];
+  metadata: AtsSimulationMetadata;
+}
+
 export interface AnalysisResult {
   candidateName: string;
   summary: string;
@@ -92,6 +125,7 @@ export interface AnalysisResult {
   actionVerbs: string[];
   grammarIssues: string[];
   atsTips: string[];
+  atsSimulation?: AtsSimulationResult;
   jobMatch?: JobMatchResult;
   roleBenchmark?: RoleBenchmarkResult;
 }

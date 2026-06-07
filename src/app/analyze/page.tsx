@@ -54,6 +54,7 @@ function mergePartialResult(
     atsTips: partial.atsTips ?? current.atsTips,
     jobMatch: partial.jobMatch ?? current.jobMatch,
     roleBenchmark: partial.roleBenchmark ?? current.roleBenchmark,
+    atsSimulation: partial.atsSimulation ?? current.atsSimulation,
   };
 }
 
@@ -149,8 +150,9 @@ export default function AnalyzePage() {
           }
 
           if (event.data && event.phase !== "complete") {
+            const partial = event.data as Partial<AnalysisResult>;
             setBufferedResult((prev) =>
-              mergePartialResult(prev || EMPTY_RESULT, event.data as Partial<AnalysisResult>)
+              mergePartialResult(prev || EMPTY_RESULT, partial)
             );
           }
 

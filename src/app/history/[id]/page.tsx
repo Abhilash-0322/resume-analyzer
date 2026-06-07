@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { AnalysisResults } from "@/components/AnalysisResults";
 import { BulletRewriter } from "@/components/BulletRewriter";
+import { ExportPdfButton } from "@/components/ExportPdfButton";
 import type { AnalysisResult, BulletRewrite } from "@/types/analysis";
 
 export default function HistoryDetailPage() {
@@ -63,13 +64,19 @@ export default function HistoryDetailPage() {
           Back to History
         </Link>
 
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold">Past Analysis</h1>
-          {createdAt && (
-            <p className="text-sm text-muted">
-              Analyzed on {format(new Date(createdAt), "MMMM d, yyyy 'at' h:mm a")}
-            </p>
-          )}
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <h1 className="text-2xl font-bold">Past Analysis</h1>
+            {createdAt && (
+              <p className="text-sm text-muted">
+                Analyzed on {format(new Date(createdAt), "MMMM d, yyyy 'at' h:mm a")}
+              </p>
+            )}
+          </div>
+          <ExportPdfButton
+            analysisId={id}
+            candidateName={result.candidateName}
+          />
         </div>
 
         <AnalysisResults result={result} fileName={fileName} />

@@ -7,6 +7,7 @@ import { AnalysisResults } from "@/components/AnalysisResults";
 import { AnalysisProgress } from "@/components/AnalysisProgress";
 import { BulletRewriter } from "@/components/BulletRewriter";
 import { RoleSelector } from "@/components/RoleSelector";
+import { ExportPdfButton } from "@/components/ExportPdfButton";
 import { useStagedReveal } from "@/hooks/useStagedReveal";
 import type { AnalysisResult, RoleId, StreamEvent } from "@/types/analysis";
 
@@ -293,12 +294,20 @@ export default function AnalyzePage() {
                   </p>
                 )}
               </div>
-              <button
-                onClick={handleReset}
-                className="rounded-lg border border-border bg-card px-4 py-2 text-sm font-medium transition hover:bg-card-hover"
-              >
-                Analyze Another Resume
-              </button>
+              <div className="flex flex-wrap items-center gap-3">
+                {analysisId && (
+                  <ExportPdfButton
+                    analysisId={analysisId}
+                    candidateName={result.candidateName}
+                  />
+                )}
+                <button
+                  onClick={handleReset}
+                  className="rounded-lg border border-border bg-card px-4 py-2 text-sm font-medium transition hover:bg-card-hover"
+                >
+                  Analyze Another Resume
+                </button>
+              </div>
             </div>
             <AnalysisResults result={result} fileName={fileName} />
             {analysisId && (

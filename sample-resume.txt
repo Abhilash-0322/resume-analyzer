@@ -1,0 +1,38 @@
+JOHN SMITH
+Software Engineer | john.smith@email.com | (555) 123-4567 | San Francisco, CA
+LinkedIn: linkedin.com/in/johnsmith | GitHub: github.com/johnsmith
+
+PROFESSIONAL SUMMARY
+Results-driven Software Engineer with 5+ years of experience building scalable web applications using React, Node.js, and Python. Passionate about clean code, system design, and delivering high-impact products. Led teams of 4 engineers and improved deployment pipelines reducing release time by 40%.
+
+EXPERIENCE
+
+Senior Software Engineer | TechCorp Inc. | Jan 2022 – Present
+- Architected and deployed microservices handling 2M+ daily API requests using Node.js and AWS
+- Led migration from monolith to microservices, reducing system downtime by 60%
+- Mentored 3 junior developers and established code review standards
+- Implemented CI/CD pipeline with GitHub Actions, cutting deployment time from 2 hours to 20 minutes
+- Collaborated with product team to deliver 12 features ahead of schedule
+
+Software Engineer | StartupXYZ | Jun 2019 – Dec 2021
+- Built responsive React frontend serving 50,000 monthly active users
+- Developed REST APIs with Express.js and PostgreSQL
+- Optimized database queries improving page load time by 35%
+- Participated in agile sprints and daily standups
+
+EDUCATION
+Bachelor of Science in Computer Science | University of California, Berkeley | 2019
+GPA: 3.7/4.0
+
+SKILLS
+Languages: JavaScript, TypeScript, Python, SQL
+Frameworks: React, Next.js, Node.js, Express, Django
+Tools: Git, Docker, AWS, MongoDB, PostgreSQL, Redis
+Soft Skills: Leadership, Communication, Problem Solving, Team Collaboration
+
+PROJECTS
+Open Source Contributor | React Query | 2023
+- Contributed bug fixes and documentation improvements to popular data-fetching library
+
+Personal Portfolio | Next.js, Tailwind CSS | 2022
+- Built and deployed personal portfolio with 99 Lighthouse performance score

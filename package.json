@@ -1,0 +1,42 @@
+{
+  "name": "resume-analyzer",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "groq-sdk": "^0.15.0",
+    "jose": "^6.2.3",
+    "lucide-react": "^0.475.0",
+    "mammoth": "^1.9.0",
+    "mongoose": "^8.10.1",
+    "next": "^15.2.0",
+    "pdf-parse": "^1.1.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "recharts": "^2.15.1",
+    "tailwind-merge": "^3.0.1",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.0",
+    "@tailwindcss/postcss": "^4.0.9",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^22.13.5",
+    "@types/pdf-parse": "^1.1.4",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@types/uuid": "^10.0.0",
+    "eslint": "^9.21.0",
+    "eslint-config-next": "^15.2.0",
+    "tailwindcss": "^4.0.9",
+    "typescript": "^5.7.3"
+  }
+}

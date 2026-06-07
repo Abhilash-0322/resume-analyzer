@@ -79,7 +79,7 @@ export default function HomePage() {
 
           <p className="mx-auto mb-10 max-w-2xl text-lg text-muted leading-relaxed sm:text-xl">
             Upload your resume and get instant ATS scoring, skill gap analysis, job matching,
-            and prioritized improvements — the same insights career coaches charge hundreds for.
+            and prioritized improvements - the same insights career coaches charge hundreds for.
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
